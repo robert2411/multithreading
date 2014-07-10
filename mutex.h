@@ -71,25 +71,18 @@ public:
 	
 	T GetVar()
 	{
-		T out;
-		if(Lock())
-			return out;
-		out = m_variable;
-		Unlock();
-		return out;
+		return m_variable;
 	};
+
 	int SetVar(T variable)
 	{
-		if(Lock())
-			return m_lastError;;
-
 		m_variable = variable;
-
-		if (Unlock())
-			return m_lastError;
 		return 0;
 	};
-		T* GetVarPointer();
+	T* GetVarPointer()
+	{
+			return &m_variable;
+	};
 };
 
 #endif
