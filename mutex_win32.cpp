@@ -21,12 +21,8 @@ int Mutex::Lock()
 		return 0;
 
 	if (dwWaitResult == WAIT_ABANDONED)
-	{
-		m_lastError = MUTEX_ERROR_LOCK_WAIT_ABANDONED;
 		return MUTEX_ERROR_LOCK_WAIT_ABANDONED;
-	}
 
-	m_lastError = MUTEX_ERROR_LOCK_ERROR;
 	return MUTEX_ERROR_LOCK_ERROR;
 
 }
@@ -34,15 +30,13 @@ int Mutex::Lock()
 int Mutex::Unlock()
 {
 	if (! ReleaseMutex(m_mutex))
-	{
-		m_lastError = MUTEX_ERROR_CANT_RELEASE_MUTEX;
 		return MUTEX_ERROR_CANT_RELEASE_MUTEX;
-	}
 	return 0;
 }
 
 Mutex::~Mutex()
 {
+	CloseHandle(m_mutex);
 }
 
 #endif

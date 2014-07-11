@@ -8,8 +8,11 @@ Version		:	1.0.0
 
 Description	:	This is a basic threading class that supports multiple platforms
 
+Todo		:	Add a pause/resurm function  - add the thread id function - write the linux port
+
 Changes		:
-				10-07-2014	-	Setting up the basic structor of the class		
+				10-07-2014	-	Adding comments
+				10-07-2014	-	Setting up the basic structure of the class		
 
 \**************************************************************************************/
 #ifndef THREAD_H_
@@ -32,19 +35,39 @@ class Thread
 public:
 	Thread();
 	/**
-	 *	Set the function that hass to run and tell if it has to run in a while (true) loop
+	 *	Set the function that has to run and tell if it has to run in a while (true) loop
 	 *
-	 *	@param loop true for a endless loop else false
-	 *	@param p_function the pointer to the function that has to run as a thread
+	 *	@param p_function the pointer to the function that has to run as a thread format (int FunctionName (void*))
 	 *
 	 *	@return 0 on success else >0
 	 */
 	int SetThreadFunction(int (*p_function)(void*));
+	
+	/**
+	 *	Set the parameters that have to be send to the thread
+	 *
+	 *	@return 0 on success else >07-2014
+	 */
 	int SetParam(void* p_param);
+	
+	/**
+	 *	Start the thread
+	 *	
+	 *	@return 0 on success else >0
+	 */
 	int Start();
+	
+	/**
+	 *	Stop the thread
+	 *
+	 *	@return 0 on success else >0
+	 */
 	int Stop();
-	//int Pause();
 
+	/**
+	 *	@warning this function is not implemented
+	 *	@return The thread ID
+	 */
 	int GetThreadId();
 
 	~Thread();
@@ -54,14 +77,19 @@ protected:
 	 *	Windows specific threading functions
 	 */
 	#ifdef _WIN32
+	/**
+	 *	This function calls the function that is stored in the function pointer
+	 */
 	static DWORD WINAPI ThreadRunner(LPVOID lpParam);
 	#endif
 
 	void* mp_param;				/**< A pointer to the param that has to be send to the thread */
 	int (*mp_function)(void*);	/**< A pointer to the function that has to run as a thread */
 
-	HANDLE m_thread;	
-	DWORD m_threadId;	
+	#ifdef _WIN32
+	HANDLE m_thread;			/**< (WINDOWS) a handle that holds the thread */
+	DWORD m_threadId;			/**< (WINDOWS) the thread ID */
+	#endif	
 };
 
 #endif

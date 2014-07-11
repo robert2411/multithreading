@@ -5,10 +5,6 @@
 #include <windows.h>
 #include "thread.h"
 
-#ifdef _DEBUG
-#include <stdio.h>
-#endif
-
 DWORD Thread::ThreadRunner(LPVOID lpParam)
 {
 	Thread* p_thread = (Thread*) lpParam;
@@ -39,16 +35,16 @@ int Thread::Stop()
 		return THREAD_ERROR_NO_RUNNING_THREAD;
 
 	if(!TerminateThread(m_thread, 0))
-	{
-		#ifdef _DEBUG
-		printf("Thread could not be closed error code: %d",GetLastError() );
-		#endif
-
 		return THREAD_ERROR_CANT_CLOSE_THREAD;
-	}
 
 	m_thread = NULL;
 	m_threadId = 0;
 	return 0;
+}
+
+Thread::~Thread()
+{
+	Stop();
+	CloseHandle(m_thread);
 }
 #endif

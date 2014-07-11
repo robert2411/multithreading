@@ -27,13 +27,25 @@ class Mutex
 public:
 	Mutex();	
 	~Mutex();
+	
+	/**
+	 *	Lock the mutex
+	 *
+	 *	@return 0 on success else >0
+	 */
 	int Lock();
+	
+	/**
+	 *	Lock the mutex
+	 *
+	 *	@return 0 on success else >0
+	 */
 	int Unlock();
 
 protected:
-	int m_lastError;
+
 	#ifdef _WIN32
-	HANDLE m_mutex;
+	HANDLE m_mutex;		/**< (windows) The handler for the mutex */
 	#endif
 };
 

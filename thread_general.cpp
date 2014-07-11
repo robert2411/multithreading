@@ -29,8 +29,3 @@ int Thread::SetParam(void* p_param)
 		mp_param = p_param;
 		return 0;
 }
-
-Thread::~Thread()
-{
-	Stop();
-}
