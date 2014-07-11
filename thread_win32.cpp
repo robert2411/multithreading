@@ -11,7 +11,7 @@ DWORD Thread::ThreadRunner(LPVOID lpParam)
 
 	p_thread->mp_function(p_thread->mp_param);
 
-	return TRUE;
+	return 0;
 }
 
 int Thread::Start()

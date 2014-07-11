@@ -1,5 +1,6 @@
 #include "../../thread.h"
 #include "../../mutex.h"
+#include "../../mailbox.h"
 #include <stdio.h>
 int test(void* test)
 {
@@ -12,6 +13,7 @@ int test(void* test)
 }
 int main()
 {
+	Mailbox<int> box;
 	Mutex mutex;
 	Thread thread;
 	thread.SetThreadFunction(&test);

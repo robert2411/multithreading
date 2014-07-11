@@ -1,0 +1,7 @@
+#ifndef MAILBOX_ERRORS_H_
+#define MAILBOX_ERRORS_H_
+
+#define MAILBOX_ERROR_START					1100
+#define MAILBOX_ERROR_BOX_FULL				(MAILBOX_ERROR_START + 1)
+
+#endif
