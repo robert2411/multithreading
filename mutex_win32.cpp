@@ -3,7 +3,6 @@
 
 Mutex::Mutex()
 {
-	m_lastError = 0;
 	m_mutex = CreateMutex( 
 		NULL,              // default security attributes
 		FALSE,             // initially not owned
