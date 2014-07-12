@@ -2,11 +2,12 @@
 									Mailbox.h
 
 Author		:	R.J.H.M.	Stevens
-Begin		:	10-07-2014
+Begin		:	11-07-2014
 				
 Version		:	1.0.0
 
-TODO		:	Inplement the linux support
+TODO		:	
+
 Description	:	This is a basic Mailbox class that supports multiple platforms
 
 Changes		:
@@ -65,11 +66,18 @@ public:
 	 *	@return true if full else false
 	 */
 	bool IsFull();
+
+	/**
+	 *	Gives back the last message run IsEmpty() first!
+	 *
+	 *	@return the last message 
+	 *	@warning if there is no massage in the buffer it returns random vallues
+	 */
 	T GetMessage();
 protected:
-	std::vector<T> m_mailBox;
-	int m_maxSize;
-	Mutex mutex;
+	std::vector<T> m_mailBox;	/**< We use a vector to store the messages */
+	int m_maxSize;				/**< The maximum size of the mailbox */
+	Mutex mutex;				/**< The mutex to make it threadsafe */
 };
 
 template <class T>
