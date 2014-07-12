@@ -4,24 +4,29 @@
 #include <stdio.h>
 int test(void* test)
 {
-	Mutex* mutex = (Mutex*) test;
-	mutex->Lock();
-	mutex->Unlock();
-	printf("test\r\n");
+	Mailbox<int>* box = (Mailbox<int>*) test;
+	//Mutex* mutex = (Mutex*) test;
+	//mutex->Lock();
+	//mutex->Unlock();
+	while(box->IsEmpty());
+	
+	printf("test %d\r\n", box->GetMessage());
 	Sleep (100);
 	return 0;
 }
 int main()
 {
 	Mailbox<int> box;
-	Mutex mutex;
+	//Mutex mutex;
 	Thread thread;
 	thread.SetThreadFunction(&test);
-	thread.SetParam(&mutex);
-	mutex.Lock();
+	thread.SetParam(&box);
+	//mutex.Lock();
 	thread.Start();
+	box.PutMessage(1000);
+
 	Sleep(1000);
-	mutex.Unlock();
+	//mutex.Unlock();
 	Sleep(1000);
 	thread.Stop();
 
