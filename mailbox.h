@@ -10,6 +10,8 @@ TODO		:
 
 Description	:	This is a basic Mailbox class that supports multiple platforms
 
+Dependencies:	mutex.h
+
 Changes		:
 				12-07-2014	-	Adding comments
 				11-07-2014	-	Setting up the basic structor of the class		
