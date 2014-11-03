@@ -4,7 +4,7 @@
 Author		:	R.J.H.M.	Stevens
 Begin		:	11-07-2014
 				
-Version		:	1.0.0
+Version		:	1.1.0
 
 TODO		:	
 
@@ -14,6 +14,8 @@ Description	:	This is a basic Mailbox class that supports multiple platforms
 Dependencies:	mutex.h
 
 Changes		:
+				03-11-2014	-	Added 2 extra functions IsEmptyNM, IsFullNM 
+									for internal use.
 				12-07-2014	-	Adding comments
 				11-07-2014	-	Setting up the basic structor of the class		
 
