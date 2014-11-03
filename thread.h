@@ -4,13 +4,14 @@
 Author		:	R.J.H.M.	Stevens
 Begin		:	10-07-2014
 				
-Version		:	1.0.0
+Version		:	1.1.0
 
 Description	:	This is a basic threading class that supports multiple platforms
 
 Todo		:	Add a pause/resurm function  - add the thread id function - write the linux port
 
 Changes		:
+				03-11-2014	-	Added linux support
 				10-07-2014	-	Adding comments
 				10-07-2014	-	Setting up the basic structure of the class		
 
@@ -25,6 +26,14 @@ Changes		:
 #include <windows.h>
 #endif
 
+/*
+ *	Linux specific includes
+ */
+#ifdef __linux__
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#endif
 /*
  *	General includes
  */
@@ -89,6 +98,12 @@ protected:
 	#ifdef _WIN32
 	HANDLE m_thread;			/**< (WINDOWS) a handle that holds the thread */
 	DWORD m_threadId;			/**< (WINDOWS) the thread ID */
+	#endif
+	
+	#ifdef __linux__
+	pthread_t m_thread;			/**< (LINUX) The thread is strored in here.  */
+	static void* ThreadRunner(void* ptr);
+	int m_threadId;
 	#endif	
 };
 

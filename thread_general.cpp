@@ -7,11 +7,18 @@ Thread::Thread()
 {
 	mp_param = NULL;
 	mp_function = NULL;
+	#ifdef _WIN32
+		m_thread = NULL;
+	#endif
 
-#ifdef _WIN32
-	m_thread = NULL;
+/*
+ *	Linux specific includes
+ */
+	#ifdef __linux__
+		m_thread = 0;
+	#endif
+	
 	m_threadId = 0;
-#endif
 }
 
 int Thread::SetThreadFunction(int (*p_function)(void*) )
