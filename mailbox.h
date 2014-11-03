@@ -81,6 +81,25 @@ protected:
 	std::vector<T> m_mailBox;	/**< We use a vector to store the messages */
 	int m_maxSize;				/**< The maximum size of the mailbox */
 	Mutex mutex;				/**< The mutex to make it threadsafe */
+	/**
+	 *	Checks if the mailbox is empty
+	 *
+	 *	@warning this function is only meant for use when the mutex is already locked
+	 *
+	 *	@return true if empty else false
+	 */
+	bool IsEmptyNM();
+
+	/**
+	 *	Checks if the mailbox is full
+	 *
+	 *
+	 *	@warning this function is only meant for use when the mutex is already locked
+	 *
+	 *	@return true if full else false
+	 */
+	bool IsFullNM();
+
 };
 
 template <class T>
@@ -106,7 +125,7 @@ template <class T>
 int Mailbox<T>::PutMessage(T message)
 {
 	mutex.Lock();
-	if (IsFull())
+	if (IsFullNM())
 		return MAILBOX_ERROR_BOX_FULL;
 	m_mailBox.push_back(message);
 	mutex.Unlock();
@@ -116,9 +135,15 @@ template <class T>
 bool Mailbox<T>::IsEmpty()
 {
 	mutex.Lock();
+	bool out = IsEmptyNM();
+	mutex.Unlock();
+	return out;
+}
+template <class T>
+bool Mailbox<T>::IsEmptyNM()
+{
 	if (m_mailBox.size() == 0)
 		return true;
-	mutex.Unlock();
 	return false;
 }
 
@@ -126,12 +151,17 @@ template <class T>
 bool Mailbox<T>::IsFull()
 {
 	mutex.Lock();
+	bool out = IsFullNM();
+	mutex.Unlock();
+	return out;
+}
+template <class T>
+bool Mailbox<T>::IsFullNM()
+{
 	if(m_mailBox.size() >= m_maxSize && m_maxSize != 0)
 	{
-		mutex.Unlock();
 		return true;
 	}
-	mutex.Unlock();
 	return false;
 }
 
@@ -140,7 +170,7 @@ T Mailbox<T>::GetMessage()
 {
 	T out;
 	mutex.Lock();
-	if (!IsEmpty())
+	if (!IsEmptyNM())
 	{
 		out = m_mailBox.front();
 		m_mailBox.erase( m_mailBox.begin());

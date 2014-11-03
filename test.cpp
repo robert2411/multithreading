@@ -14,7 +14,7 @@ int test(void* test)
 	while(box->IsEmpty());
 	
 	printf("test %d\r\n", box->GetMessage());
-	sleep (100);
+	sleep (1);
 	return 0;
 }
 int main()
@@ -28,12 +28,12 @@ int main()
 	//mutex.Lock();
 	thread.Start();
 	printf("thread started - main  \r\n");
-	box.PutMessage(1000);
+	box.PutMessage(999);
 	printf("message send \r\n");
-	sleep(1000);
-	printf("sleep \r\n");
+	sleep(10);
+	//printf("sleep \r\n");
 	//mutex.Unlock();
-	sleep(1000);
+	//sleep(10);
 	printf("kill threads \r\n");
 	thread.Stop();
 	printf("finished \r\n");

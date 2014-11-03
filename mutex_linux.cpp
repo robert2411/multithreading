@@ -3,8 +3,8 @@
 
 Mutex::Mutex()
 {
-	m_mutex = PTHREAD_MUTEX_INITIALIZER;
-	//pthread_mutex_init(&m_mutex, NULL);
+	//m_mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_init(&m_mutex, NULL);
 }
 
 int Mutex::Lock()
