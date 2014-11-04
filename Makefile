@@ -1,4 +1,7 @@
 #this will command all the files
+NAME = threadingTest
+CC = g++
 all:
-	g++ -pthread  test.cpp mutex_linux.cpp thread_general.cpp thread_linux.cpp -o threadingTest
-
+	$(CC) -pthread  test.cpp mutex_linux.cpp thread_general.cpp thread_linux.cpp -o $(NAME)
+clean:
+	rm -rf $(NAME)
