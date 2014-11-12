@@ -79,6 +79,14 @@ public:
 	 *	@warning if there is no massage in the buffer it returns random vallues
 	 */
 	T GetMessage();
+	
+	/**
+	 *	Gives back the Newest message and erases the other ones run IsEmpty() first!
+	 *
+	 *	@return the Newest message 
+	 *	@warning if there is no massage in the buffer it returns random vallues
+	 */
+	T GetNewestMessageErase();
 protected:
 	std::vector<T> m_mailBox;	/**< We use a vector to store the messages */
 	int m_maxSize;				/**< The maximum size of the mailbox */
@@ -176,6 +184,21 @@ T Mailbox<T>::GetMessage()
 	{
 		out = m_mailBox.front();
 		m_mailBox.erase( m_mailBox.begin());
+	}
+	mutex.Unlock();
+	return out;
+
+}
+
+template <class T>
+T Mailbox<T>::GetNewestMessageErase()
+{
+	T out;
+	mutex.Lock();
+	if (!IsEmptyNM())
+	{
+		out = m_mailBox.back();
+		m_mailBox.clear();
 	}
 	mutex.Unlock();
 	return out;
